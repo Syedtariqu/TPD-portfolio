@@ -1,7 +1,7 @@
 const Product = require("../modles/products");
 
 exports.addProduct = async (req, res) => {
-  const { name, category, price, rating, shortDescription } =
+  const { name, category, price, rating, shortDescription ,link} =
     req.body;
     if (req.file) {
         // Ensure the path uses forward slashes
@@ -9,7 +9,7 @@ exports.addProduct = async (req, res) => {
        
       }
     const image = req.file ? req.file.path : null;
-    if (!name || !category || !price || !rating || !shortDescription || !image) {
+    if (!name || !category || !price || !rating || !shortDescription || !image || !link) {
         return res.status(400).json({ success: false, message: "Missing required fields" });
       }
    
@@ -20,13 +20,15 @@ exports.addProduct = async (req, res) => {
      if (ExistName) {
        return res.status(409).json({ success: false, message: "Product with this name already exists" });
      }
+  
     const newProduct = new Product({
       name,
       category,
       price,
       rating,
       shortDescription,
-      image
+      image,
+      link
     });
     await newProduct.save();
     // console.log("Hello i am product controller under try block")

@@ -14,6 +14,11 @@ const productSchema = new mongoose.Schema({
     require: [true, "shortDescription is required"],
   },
   image: { type: String, required: true }, 
+  link: {
+    type: String,
+    required: [true, "Product url is required"],
+    unique: true,
+  },
 });
 
 module.exports = mongoose.model("Product", productSchema);
